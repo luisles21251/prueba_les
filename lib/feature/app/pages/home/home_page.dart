@@ -3,6 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:prueba_les/feature/app/pages/home/detail_movie.dart';
 import 'package:prueba_les/feature/app/pages/widgets/card_movie.dart';
 
 class HomePage extends StatelessWidget {
@@ -72,10 +74,15 @@ class HomePage extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
                               children: [
-                                CardMovie(
-                                  title: "Avengers Endgame",
-                                  stars: 4,
-                                  image: "https://i.pinimg.com/736x/26/04/7a/26047a439ca5d3d82b2d982f9eb2f124.jpg",
+                                InkWell(
+                                  child: CardMovie(
+                                    title: "Avengers Endgame",
+                                    stars: 4,
+                                    image: "https://i.pinimg.com/736x/26/04/7a/26047a439ca5d3d82b2d982f9eb2f124.jpg",
+                                  ),
+                                  onTap:(){
+                                    Get.to(()=>DetailMoviePage());
+                                  },
                                 ),
                                 CardMovie(
                                   title: "Capitan America",
