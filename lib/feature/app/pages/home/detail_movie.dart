@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailMoviePage extends StatelessWidget {
@@ -9,50 +10,90 @@ class DetailMoviePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: 280,
-            width: MediaQuery.of(context).size.width,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Aquaman"),
-              Icon(Icons.account_balance_sharp)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Wacht now"),
-              Row(
-                children: [
-                  Icon(Icons.star),
-                  Icon(Icons.star),
-                  Icon(Icons.star),
-                  Icon(Icons.star),
-                ],
-              )
-            ],
-          ),
-          Container(
-            child: Text("lorem insup lorem lorem lorem lorem insiup, jsbchejicmcxjsbcj, ajdbwjcb, jwduewfbe,"),
-          ),
-
-          Container(
-            child: Row(
-              children: [
-                CircleAvatar(),
-                CircleAvatar(),
-                CircleAvatar(),
-                CircleAvatar(),
-                CircleAvatar(),
-
-              ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              child: Image(
+                fit: BoxFit.fill,
+                image: NetworkImage("https://m.guiadelocio.com/var/guiadelocio.com/storage/images/cine/archivo-peliculas/aquaman/35414703-9-esl-ES/aquaman.jpg"),
+              ),
+              height: 280,
+              width: MediaQuery.of(context).size.width,
             ),
-          )
-        ],
+            SizedBox(height: 10,),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Aquaman"),
+                  Icon(Icons.account_balance_sharp)
+                ],
+              ),
+            ),
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 18.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Wacht now"),
+                  Row(
+                    children: [
+                      Icon(Icons.star, color: Colors.yellow,),
+                      Icon(Icons.star, color: Colors.yellow,),
+                      Icon(Icons.star, color: Colors.yellow,),
+                      Icon(Icons.star, color: Colors.yellow,),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15, left: 18,bottom: 25),
+              child: Center(child: Text("lorem insup lorem lorem lorem lorem insiup, jsbchejicmcxjsbcj, ajdbwjcb, jwduewfbe,")),
+            ),
+
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      CircleAvatar(),
+                      SizedBox(height: 5,),
+                      Text("Zack Effron")
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      CircleAvatar(),
+                      SizedBox(height: 5,),
+                      Text("Zack Effron")
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      CircleAvatar(),
+                      SizedBox(height: 5,),
+                      Text("Zack Effron")
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      CircleAvatar(),
+                      SizedBox(height: 5,),
+                      Text("Zack Effron")
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+
+
+          ],
+        ),
       ),
     );
   }
