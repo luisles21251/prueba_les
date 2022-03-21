@@ -12,19 +12,16 @@ class AppInterceptors extends Interceptor {
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     List<String> noRequiresAuthentication = [
-      '/api/login-movil/generar-password',
-          '/api/login-movil/validar-usuario',
-          '/api/login-movil/validar-codigo',
-          '/api/login-movil',
+
     ];
 
     bool token = !noRequiresAuthentication.contains(options.path);
     if (token) {
 
-     // String token = await getToken();
-      //log(token.toString(), name: 'tokenresp');
+      String token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNzVkZDZmMmIyZGYyMmQ5Y2RjYzY5ZGE1NTM0NjNmOSIsInN1YiI6IjYyMzU0MGZlMWFjMjkyMDA0NjViNTQ2NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.v23uI9-ayIGXtygBXw5Y-WqD5KUKvMZ8C4uWYEBu-Cw";
+      String apiKey = "e75dd6f2b2df22d9cdcc69da553463f9";
 
-      options.headers.addAll({"Authorization": "Bearer $token"});
+      options.headers.addAll({"Authorization": "Bearer $token", "api_key" : "$apiKey"});
     }
 
     return super.onRequest(options, handler);

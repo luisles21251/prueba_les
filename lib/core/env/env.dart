@@ -2,7 +2,7 @@ class Env {
   final EnvMode? m;
   Env(this.m);
 
-  static final String? pathUrlImage = "";
+  static final String? pathUrlImage = "https://image.tmdb.org/t/p/w500";
   static final String? _apiProduction = "https://api.themoviedb.org/3/";
 
 
