@@ -157,6 +157,11 @@ class HomePage extends StatelessWidget {
                     height: 350,
                     child:  Center(child: CircularProgressIndicator(),));
               }
+              if(_.movies!.movies!.length == 0) {
+                return SizedBox(
+                height: 350,
+                child: Center(child: Text('No se encontraron resultados', style: _.theme.value == true ? AppFonts.whiteM16 : AppFonts.blackM16),),);
+              }
               return Column(
                 children: [
                   const SizedBox(height: 10,),

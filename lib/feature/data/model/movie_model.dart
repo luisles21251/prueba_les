@@ -40,7 +40,7 @@ class MovieModel extends MovieEntity {
       genero: json.containsKey("genres") && json["genres"] != null ? (json["genres"] as List).map((e) =>GeneroModel.formJson(e)).toList():null,
       studios: json.containsKey("production_companies") && json["production_companies"] !=null ?(json["production_companies"] as List).map((e) => StudioModel.fromJson(e)).toList(): null,
       //popularity: json["popularity"],
-      releaseDate: json.containsKey("release_date") && json["release_date"] != null ? DateTime.parse(json["release_date"]) : null,
+      releaseDate: json.containsKey("release_date")&& json["release_date"] ==  DateTime && json["release_date"]  != null   ? DateTime.parse(json["release_date"]) :  DateTime.parse( "2020-02-29") ,
       title: json["title"],
       vote: json["vote_average"]
     );
