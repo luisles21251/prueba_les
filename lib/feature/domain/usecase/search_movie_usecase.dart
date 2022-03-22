@@ -8,7 +8,7 @@ import 'package:prueba_les/feature/domain/repository/movie_repository.dart';
 
 class SearchMovieUseCase implements UseCase <ListMoviesEntity,String>{
 
- final MovieRepository repository;
+ final MovieRepository  repository;
 
   SearchMovieUseCase(this.repository);
 

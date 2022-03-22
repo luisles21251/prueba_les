@@ -9,16 +9,16 @@ import 'package:prueba_les/feature/domain/repository/movie_repository.dart';
 
 class MovieRepositoryImpl implements MovieRepository{
 
-final MoviesRemoteDataSource ?remoteDataSource;
+final MoviesRemoteDataSource remoteDataSource;
 
-  MovieRepositoryImpl({this.remoteDataSource});
+  MovieRepositoryImpl({required this.remoteDataSource});
 
 
   @override
   Future<Either<Failure, ListMoviesEntity>> listMovies() async{
    try{
-     final res = await remoteDataSource?.listMovies();
-     return Right(res!);
+     final res = await remoteDataSource.listMovies();
+     return Right(res);
    } on ServerFailure catch(e){
      return Left(e);
     }
@@ -27,8 +27,8 @@ final MoviesRemoteDataSource ?remoteDataSource;
   @override
   Future<Either<Failure, MovieEntity>> movieDetail(int id) async{
     try{
-        final res = await remoteDataSource?.movieDetail(id);
-        return Right(res!);
+        final res = await remoteDataSource.movieDetail(id);
+        return Right(res);
     } on ServerFailure catch (e){
 return Left(e);
     }
@@ -37,8 +37,8 @@ return Left(e);
   @override
   Future<Either<Failure, ListMoviesEntity>> searchMovie( String data)async {
     try{
-      final res = await remoteDataSource?.search(data);
-      return Right(res!);
+      final res = await remoteDataSource.search(data);
+      return Right(res);
     }
     on ServerFailure catch(e){
 return  Left(e);

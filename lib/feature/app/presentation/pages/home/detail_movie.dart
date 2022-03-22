@@ -38,7 +38,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
    print(_controllerMovie.theme.value);
 
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: _controllerMovie.theme.value == true ? AppColors.primary : Color(0xff5ca0d3),
       body: SafeArea(
         child: GetBuilder<MovieDetailController>(
           initState: (_)=>_controller?.inInitData(),
@@ -70,7 +70,8 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(_.movie?.title ??"", style:_controllerMovie.theme.value == true ? AppFonts.whiteM19 : AppFonts.blackL19,),
-                        Icon(Icons.hd, color: Colors.grey,)
+                        Icon(Icons.hd, color:_controllerMovie.theme.value == true ? Colors.grey : Colors.black38
+                        ,)
                       ],
                     ),
                   ),
@@ -83,15 +84,15 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                         height:34,
                             width: 100,
                             decoration:BoxDecoration(
-                              color: Colors.grey.withOpacity(0.2),
+                              color: _controllerMovie.theme.value == true ? Colors.grey.withOpacity(0.2) : Colors.white.withOpacity(0.5),
                               borderRadius: BorderRadius.circular(25)
                             ),
-                            child: Center(child: Text("Wacht now", style: AppFonts.whiteM16,))
+                            child: Center(child: Text("Wacht now", style:_controllerMovie.theme.value == true ?  AppFonts.whiteM16 : AppFonts.blackM16,))
 
                         ),
                         Row(
                           children: List.generate(5, (i) {
-                            if(star <= i)return Icon(Icons.star_border_outlined);
+                            if(star <= i)return Icon(Icons.star_border_outlined, color: _controllerMovie.theme.value == true ? Colors.white : Colors.black38,);
                             return Icon(Icons.star, color: Colors.yellow,);
                           })
                         )
@@ -100,7 +101,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 15, left: 18,bottom: 25),
-                    child: Center(child: Text(_.movie?.overview ??"", style: AppFonts.whiteM16,)),
+                    child: Center(child: Text(_.movie?.overview ??"", style:_controllerMovie.theme.value == true ? AppFonts.whiteM16 : AppFonts.blackM16,)),
                   ),
 
                   Container(
@@ -127,7 +128,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                   ),
                                 ),
                                 SizedBox(height: 5,),
-                                Container(child: Center(child: Text(_.movie?.studios?[i].name??"", overflow: TextOverflow.ellipsis,))),
+                                Container(child: Center(child: Text(_.movie?.studios?[i].name??"", style:_controllerMovie.theme.value == true ? AppFonts.whiteM13: AppFonts.blackL13, overflow: TextOverflow.ellipsis,))),
                               ],
                             ),
                           );
@@ -135,21 +136,22 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                   ),
 
                   Container(
+                    width: double.infinity,
                     height: 20,
-                    margin: EdgeInsets.only(top: 6, left: 18),
+                    margin: EdgeInsets.only(top: 6, left: 18, ),
                     child: Row(
                       children: [
-                        Text( "Studio: ", style: AppFonts.whiteM16,),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
+                        Text( "Studio: ", style:_controllerMovie.theme.value == true ? AppFonts.whiteM16: AppFonts.blackM16,),
+                        Expanded(
                           child: Container(
-                            width: 285,
+                            margin: EdgeInsets.only(right: 10),
+                            width: double.infinity,
                             height: 16,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                                 itemCount: _.movie?.studios?.length,
                                 itemBuilder:(ctx, i){
-                                  return Text(_.movie!.studios!.length <=1 ? "${_.movie?.studios?[i].name??""}": "${_.movie?.studios?[i].name??""}, ", style:AppFonts.whiteM13);
+                                  return Text(_.movie!.studios!.length <=1 ? "${_.movie?.studios?[i].name??""}": "${_.movie?.studios?[i].name??""}, ", style:_controllerMovie.theme.value == true ? AppFonts.whiteM13: AppFonts.blackL13);
                                 }
                             ),
                           ),
@@ -161,10 +163,10 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                     margin: EdgeInsets.only(top: 6, left: 18),
                     child:Row(
                       children: [
-                        Text("Genre:  ",style: AppFonts.whiteM16),
+                        Text("Genre:  ",style:_controllerMovie.theme.value == true ?  AppFonts.whiteM16 : AppFonts.blackM15),
                         Row(
                           children: List.generate(_.movie!.generos!.length,(i){
-                            return Text(_.movie!.generos!.length <= 1 ? "${_.movie!.generos?[i].name??""}" : "${_.movie!.generos?[i].name??""} , ",style: AppFonts.whiteM13);
+                            return Text(_.movie!.generos!.length <= 1 ? "${_.movie!.generos?[i].name??""}" : "${_.movie!.generos?[i].name??""} , ",style:_controllerMovie.theme.value == true ? AppFonts.whiteM13 : AppFonts.blackL13);
                           }),
                         )
                       ],
@@ -174,8 +176,8 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                     margin: EdgeInsets.only(top: 6, left: 18),
                     child: Row(
                       children: [
-                        Text("Release: ",style: AppFonts.whiteM16),
-                        Text(DateFormat("y").format(_.movie!.releaseDate!),style: AppFonts.whiteM13)
+                        Text("Release: ",style:_controllerMovie.theme.value == true ? AppFonts.whiteM16 : AppFonts.blackM16),
+                        Text(DateFormat("y").format(_.movie!.releaseDate!),style:_controllerMovie.theme.value == true ? AppFonts.whiteM13 : AppFonts.blackL13 )
                       ],
                     ),
                   )

@@ -52,7 +52,6 @@ class MoviesController extends GetxController {
     theme.value = false;
     Get.changeTheme(ThemeData.dark());
   }
-  update();
   }
 
   /*void onEditingComplete(){

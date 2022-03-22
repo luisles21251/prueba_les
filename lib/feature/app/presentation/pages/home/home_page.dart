@@ -36,17 +36,20 @@ class HomePage extends StatelessWidget {
              init: _controller,
               builder: (_) {
                 return Obx(() {
-                    return Container(
-                      margin:EdgeInsets.only(left: 30),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                        SizedBox(width: 5,),
-                      IconButton(icon: Icon(_.theme.value ? MdiIcons.brightness5: MdiIcons.moonWaningCrescent, color:_.theme.value ? Colors.yellow : Colors.blueGrey ,  ),
-                          onPressed: (){
-                        _.changeTheme();
-                          })
+                    return Visibility(
+                      visible: _.bottomSearch.value == false,
+                      child: Container(
+                        margin:const EdgeInsets.only(left: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                         const SizedBox(width: 5,),
+                        IconButton(icon: Icon(_.theme.value ? MdiIcons.brightness5: MdiIcons.moonWaningCrescent, color:_.theme.value ? Colors.yellow : Colors.blueGrey ,  ),
+                            onPressed: (){
+                          _.changeTheme();
+                            })
           ],),
+                      ),
                     );
                   }
                 );
@@ -68,59 +71,53 @@ class HomePage extends StatelessWidget {
                     init:_controller,
                     builder: (_) {
                     return Container(
-                      margin: const EdgeInsets.only(left:35),
-                      child: Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              color: _.theme.value == true ? Colors.white.withOpacity(0.5) : Colors.black38
-                            ),
-                            height: 44,
-                            width: 320,
-                            child:TextFormField(
-                              style: const TextStyle(color: Colors.white),
-                                  decoration:const InputDecoration(
-
-                                    prefixIcon:  Icon(Icons.search, color: Colors.white,),
-                                    hintText: 'Search',
-                                      hintStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w300),
-                                      fillColor: Colors.transparent,
-                                      filled: true,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                                          borderSide: BorderSide(
-                                              color: Colors.white, width: 5.0)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                                          borderSide: BorderSide(
-                                              color: Colors.white, width: 1.0)),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                                          borderSide: BorderSide(
-                                              color: Colors.white, width: 1.0)),
-                                    errorBorder:  OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                                        borderSide: BorderSide(
-                                            color: Colors.white, width: 1.0)),
-                                    focusedErrorBorder: InputBorder.none
-                                  ),
-                                  controller:_.searchCtrl ,
-
-                                  validator: _.errorTitleInput,
-                                  onChanged: _.changeTitle,
-                                  autovalidateMode: AutovalidateMode.always,
-                              onEditingComplete:(){
-                                    FocusScope.of(context).unfocus();
-                                    _.searchMovie();
-                                    _.bottomSearch.value = true;
-                              },
-                            )
-                          ),
-                        ],
+                      margin:EdgeInsets.only(left:35, right: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: _.theme.value == true ? Colors.white.withOpacity(0.5) : Colors.black38
                       ),
+                      height: 44,
+                      //width:MediaQuery.of(context).size.width,
+                      child:TextFormField(
+                        style: const TextStyle(color: Colors.white),
+                            decoration:const InputDecoration(
+
+                              prefixIcon:  Icon(Icons.search, color: Colors.white,),
+                              hintText: 'Search',
+                                hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w300),
+                                fillColor: Colors.transparent,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(25)),
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 5.0)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 1.0)),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 1.0)),
+                              errorBorder:  OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(25)),
+                                  borderSide: BorderSide(
+                                      color: Colors.white, width: 1.0)),
+                              focusedErrorBorder: InputBorder.none
+                            ),
+                            controller:_.searchCtrl ,
+
+                            validator: _.errorTitleInput,
+                            onChanged: _.changeTitle,
+                            autovalidateMode: AutovalidateMode.always,
+                        onEditingComplete:(){
+                              FocusScope.of(context).unfocus();
+                              _.searchMovie();
+                              _.bottomSearch.value = true;
+                        },
+                      )
                     );
                   }
                 ),
@@ -166,7 +163,7 @@ class HomePage extends StatelessWidget {
                                            id: "movies",
                                            init: _controller,
                                            builder: (_) {
-                                             if (_.isload.value) return const Center(child: CircularProgressIndicator(),);
+                                             if (_.isload.value) return const Center(child: CircularProgressIndicator(color: Colors.white,),);
                                              return ListView.builder(
                                                scrollDirection: Axis.horizontal,
                                                shrinkWrap: true,
@@ -175,6 +172,7 @@ class HomePage extends StatelessWidget {
                                                  return InkWell(
                                                    child: CardMovie(
                                                      movie: _.recomend?[i],
+                                                     theme: _.theme.value,
                                                    ),
                                                    onTap: () {
                                                      Get.to(() => DetailMoviePage(
@@ -203,7 +201,7 @@ class HomePage extends StatelessWidget {
                                            id: "movies",
                                            init: _controller,
                                            builder: (_) {
-                                             if (_.isload.value) return const Center(child: CircularProgressIndicator(),);
+                                             if (_.isload.value) return const Center(child: CircularProgressIndicator(color: Colors.white,),);
                                              return ListView.builder(
                                                scrollDirection: Axis.horizontal,
                                                shrinkWrap: true,
@@ -212,6 +210,7 @@ class HomePage extends StatelessWidget {
                                                  return InkWell(
                                                    child: CardMovie(
                                                      movie: _.top?[i],
+                                                       theme: _.theme.value
                                                    ),
                                                    onTap: () {
                                                      Get.to(() => DetailMoviePage(
@@ -225,14 +224,14 @@ class HomePage extends StatelessWidget {
                                      )
                                    ],
                                  );
-                               } else {
+                               } /*else {
                                  if (_.isloadSearch.value == false) {
                                    return const SizedBox(
                                      height: 350,
                                      child: Center(
-                                         child: CircularProgressIndicator()),
+                                         child: CircularProgressIndicator(color: Colors.white,)),
                                    );
-                                 } else {
+                                 } */else {
                                    return SingleChildScrollView(
                                      child: GetBuilder<MoviesController>(
                                          id: "search",
@@ -272,7 +271,7 @@ class HomePage extends StatelessWidget {
                                                        crossAxisCount: 2,
                                                        crossAxisSpacing: 0,
                                                        mainAxisSpacing: 15,
-                                                       mainAxisExtent: 230,
+                                                       mainAxisExtent: 235,
                                                      ),
                                                      itemCount: _.movies?.movies?.length,
                                                      itemBuilder: (ctx, i) {
@@ -298,7 +297,7 @@ class HomePage extends StatelessWidget {
                                  }
                                }
 
-                        }
+                      //  }
                       ),
                     ),
                   ),
