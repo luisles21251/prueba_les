@@ -3,9 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:prueba_les/feature/app/presentation/controllers/movies_controller.dart';
-import 'package:prueba_les/injection_container.dart';
-
 
 import 'home/detail_movie.dart';
 import 'home/home_page.dart';

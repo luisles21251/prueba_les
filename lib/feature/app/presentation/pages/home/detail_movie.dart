@@ -44,7 +44,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
           initState: (_)=>_controller?.inInitData(),
           init: _controller,
           builder: (_) {
-            if(_.isLoad.value)return Center(child: CircularProgressIndicator(),);
+            if(_.isLoad.value)return const Center(child: CircularProgressIndicator(),);
             var star = _.movie!.vote!.toInt() / 2;
             return SingleChildScrollView(
               child: Column(
@@ -65,7 +65,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                   ),
                   SizedBox(height: 10,),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -76,7 +76,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                     ),
                   ),
                   Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: 18.0),
+                    padding:  const EdgeInsets.symmetric(horizontal: 18.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -87,7 +87,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                               color: _controllerMovie.theme.value == true ? Colors.grey.withOpacity(0.2) : Colors.white.withOpacity(0.5),
                               borderRadius: BorderRadius.circular(25)
                             ),
-                            child: Center(child: Text("Wacht now", style:_controllerMovie.theme.value == true ?  AppFonts.whiteM16 : AppFonts.blackM16,))
+                            child: Center(child: Text("Watch now", style:_controllerMovie.theme.value == true ?  AppFonts.whiteM16 : AppFonts.blackM16,))
 
                         ),
                         Row(
@@ -100,13 +100,13 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 15, left: 18,bottom: 25),
+                    margin: const EdgeInsets.only(top: 15, left: 18,bottom: 25),
                     child: Center(child: Text(_.movie?.overview ??"", style:_controllerMovie.theme.value == true ? AppFonts.whiteM16 : AppFonts.blackM16,)),
                   ),
 
                   Container(
                     height: 100,
-                    margin: EdgeInsets.only(left: 18, right: 18, bottom: 10),
+                    margin: const EdgeInsets.only(left: 18, right: 18, bottom: 10),
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                         itemCount: _.movie?.studios?.length,
@@ -127,8 +127,8 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                     )
                                   ),
                                 ),
-                                SizedBox(height: 5,),
-                                Container(child: Center(child: Text(_.movie?.studios?[i].name??"", style:_controllerMovie.theme.value == true ? AppFonts.whiteM13: AppFonts.blackL13, overflow: TextOverflow.ellipsis,))),
+                                const SizedBox(height: 5,),
+                                Center(child: Text(_.movie?.studios?[i].name??"", style:_controllerMovie.theme.value == true ? AppFonts.whiteM13: AppFonts.blackL13, overflow: TextOverflow.ellipsis,)),
                               ],
                             ),
                           );
@@ -138,7 +138,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                   Container(
                     width: double.infinity,
                     height: 20,
-                    margin: EdgeInsets.only(top: 6, left: 18, ),
+                    margin: const EdgeInsets.only(top: 6, left: 18, ),
                     child: Row(
                       children: [
                         Text( "Studio: ", style:_controllerMovie.theme.value == true ? AppFonts.whiteM16: AppFonts.blackM16,),
@@ -160,7 +160,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 6, left: 18),
+                    margin: const EdgeInsets.only(top: 6, left: 18),
                     child:Row(
                       children: [
                         Text("Genre:  ",style:_controllerMovie.theme.value == true ?  AppFonts.whiteM16 : AppFonts.blackM15),
@@ -173,7 +173,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 6, left: 18),
+                    margin: const EdgeInsets.only(top: 6, left: 18),
                     child: Row(
                       children: [
                         Text("Release: ",style:_controllerMovie.theme.value == true ? AppFonts.whiteM16 : AppFonts.blackM16),

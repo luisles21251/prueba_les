@@ -1,0 +1,1 @@
+enum TypeForSegment {HOME, SEARCH}

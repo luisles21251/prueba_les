@@ -1,5 +1,7 @@
 
 
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -8,6 +10,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:prueba_les/core/utils/theme_fonts_color_app/theme_color_fonts_app.dart';
 import 'package:prueba_les/feature/app/presentation/controllers/movies_controller.dart';
 import 'package:prueba_les/feature/app/presentation/pages/widgets/card_movie.dart';
+import 'package:prueba_les/feature/domain/entities/enum_segment.dart';
 import 'package:prueba_les/injection_container.dart';
 
 import 'detail_movie.dart';
@@ -37,7 +40,7 @@ class HomePage extends StatelessWidget {
               builder: (_) {
                 return Obx(() {
                     return Visibility(
-                      visible: _.bottomSearch.value == false,
+                      visible: _.dynamicFor == TypeForSegment.HOME,
                       child: Container(
                         margin:const EdgeInsets.only(left: 30),
                         child: Row(
@@ -71,7 +74,7 @@ class HomePage extends StatelessWidget {
                     init:_controller,
                     builder: (_) {
                     return Container(
-                      margin:EdgeInsets.only(left:35, right: 20),
+                      margin:const EdgeInsets.only(left:35, right: 20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         color: _.theme.value == true ? Colors.white.withOpacity(0.5) : Colors.black38
@@ -115,7 +118,7 @@ class HomePage extends StatelessWidget {
                         onEditingComplete:(){
                               FocusScope.of(context).unfocus();
                               _.searchMovie();
-                              _.bottomSearch.value = true;
+                              _.changeDynamicForm(TypeForSegment.SEARCH);
                         },
                       )
                     );
@@ -133,173 +136,7 @@ class HomePage extends StatelessWidget {
                           topLeft: Radius.circular(20)),
                       color: _.theme.value ==true ? AppColors.primary:  Color(0xff5ca0d3)
                     ),
-                    child: SingleChildScrollView(
-                      child: GetBuilder<MoviesController>(
-                        id: "bottom",
-                        init:_controller,
-                        builder: (_) {
-                               if(_.bottomSearch.value == false) {
-                                 return Column(
-                                   children: [
-                                     Container(
-                                       margin:
-                                       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                                       child: Row(
-                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                         children:  [
-                                           Text(
-                                             "RECOMENDED FOR YOU",
-                                             style: _.theme.value == true ?  AppFonts.whiteM16:AppFonts.blackM16,
-                                           ),
-                                           Text("see all",
-                                               style: _.theme.value == true ?  AppFonts.whiteM16 : AppFonts.blackM16 ,)
-                                         ],
-                                       ),
-                                     ),
-                                     Container(
-                                       height: 250,
-                                       child: GetBuilder<MoviesController>(
-                                         //initState: (_)=>_controller?.listMovies(),
-                                           id: "movies",
-                                           init: _controller,
-                                           builder: (_) {
-                                             if (_.isload.value) return const Center(child: CircularProgressIndicator(color: Colors.white,),);
-                                             return ListView.builder(
-                                               scrollDirection: Axis.horizontal,
-                                               shrinkWrap: true,
-                                               itemCount: _.recomend?.length,
-                                               itemBuilder: (ctx, i) {
-                                                 return InkWell(
-                                                   child: CardMovie(
-                                                     movie: _.recomend?[i],
-                                                     theme: _.theme.value,
-                                                   ),
-                                                   onTap: () {
-                                                     Get.to(() => DetailMoviePage(
-                                                       id: _.recomend?[i].id,
-                                                     ));
-                                                   },
-                                                 );
-                                               },
-                                             );
-
-                                           }),
-                                     ),
-                                     Container(
-                                         width:MediaQuery.of(context).size.width,
-                                         margin:const EdgeInsets.only(left: 20, bottom: 10),
-                                         child: Text(
-                                           "TOP RATED",
-                                           style: _.theme.value == true ? AppFonts.whiteM16 : AppFonts.blackM16,
-                                         )
-                                     ),
-
-                                     Container(
-                                       height: MediaQuery.of(context).size.height,
-                                       child: GetBuilder<MoviesController>(
-                                         //initState: (_)=>_controller?.listMovies(),
-                                           id: "movies",
-                                           init: _controller,
-                                           builder: (_) {
-                                             if (_.isload.value) return const Center(child: CircularProgressIndicator(color: Colors.white,),);
-                                             return ListView.builder(
-                                               scrollDirection: Axis.horizontal,
-                                               shrinkWrap: true,
-                                               itemCount: _.top?.length,
-                                               itemBuilder: (ctx, i) {
-                                                 return InkWell(
-                                                   child: CardMovie(
-                                                     movie: _.top?[i],
-                                                       theme: _.theme.value
-                                                   ),
-                                                   onTap: () {
-                                                     Get.to(() => DetailMoviePage(
-                                                       id: _.top?[i].id,
-                                                     ));
-                                                   },
-                                                 );
-                                               },
-                                             );
-                                           }),
-                                     )
-                                   ],
-                                 );
-                               } /*else {
-                                 if (_.isloadSearch.value == false) {
-                                   return const SizedBox(
-                                     height: 350,
-                                     child: Center(
-                                         child: CircularProgressIndicator(color: Colors.white,)),
-                                   );
-                                 } */else {
-                                   return SingleChildScrollView(
-                                     child: GetBuilder<MoviesController>(
-                                         id: "search",
-                                         init: _controller,
-                                         builder: (_) {
-                                           if(_.isloadSearch.value) {
-                                             return  const SizedBox(
-                                               height: 350,
-                                               child:  Center(child: CircularProgressIndicator(),));
-                                           }
-                                           return Column(
-                                             children: [
-                                               const SizedBox(height: 10,),
-
-                                               Container(
-                                                 margin:const EdgeInsets.symmetric(horizontal: 18),
-                                                 width:MediaQuery.of(context).size.width,
-                                                 child: Row(
-                                                   mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                                   children: [
-                                                     Text(_.data??"".toUpperCase(),style: AppFonts.whiteM16,),
-                                                     InkWell(
-                                                       child: Text("Home", style:AppFonts.whiteM16),
-                                                       onTap:(){
-                                                         _.changeBottom();
-                                                       }
-                                                     )
-                                                   ],
-                                                 ),
-                                               ),
-                                               const SizedBox(height: 10,),
-                                               SizedBox(
-                                                 height:500,
-                                                 child: GridView.builder(
-                                                   padding:EdgeInsets.only(left: 20),
-                                                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                       crossAxisCount: 2,
-                                                       crossAxisSpacing: 0,
-                                                       mainAxisSpacing: 15,
-                                                       mainAxisExtent: 235,
-                                                     ),
-                                                     itemCount: _.movies?.movies?.length,
-                                                     itemBuilder: (ctx, i) {
-                                                       return InkWell(
-                                                         child: CardMovie(
-                                                           movie: _.movies?.movies?[i],
-                                                         ),
-                                                         onTap: () {
-                                                           Get.to(() =>
-                                                               DetailMoviePage(
-                                                                id:_.movies?.movies?[i].id
-                                                               ));
-                                                         },
-                                                       );
-                                                     }),
-                                               ),
-                                             ],
-                                           );
-                                         }
-                                     )
-
-                                   );
-                                 }
-                               }
-
-                      //  }
-                      ),
-                    ),
+                    child: _swichSegment(context),
                   ),
                 )
               ],
@@ -309,21 +146,173 @@ class HomePage extends StatelessWidget {
       }
     );
   }
+  Widget buildSearch(){
+    return  SingleChildScrollView(
+        child: GetBuilder<MoviesController>(
+            id: "search",
+            init: _controller,
+            builder: (_) {
+              if(_.isloadSearch.value) {
+                return  const SizedBox(
+                    height: 350,
+                    child:  Center(child: CircularProgressIndicator(),));
+              }
+              return Column(
+                children: [
+                  const SizedBox(height: 10,),
+
+                  Container(
+                    margin:const EdgeInsets.symmetric(horizontal: 18),
+                    child: Row(
+                      mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(_.data??"".toUpperCase(),style: AppFonts.whiteM16,),
+                        InkWell(
+                            child: const Text("Home", style:AppFonts.whiteM16),
+                            onTap:(){
+                              _.changeDynamicForm(TypeForSegment.HOME);
+                            }
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10,),
+                  SizedBox(
+                    height:500,
+                    child: GridView.builder(
+                        padding:const EdgeInsets.only(left: 20),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 0,
+                          mainAxisSpacing: 15,
+                          mainAxisExtent: 235,
+                        ),
+                        itemCount: _.movies?.movies?.length,
+                        itemBuilder: (ctx, i) {
+                          return InkWell(
+                            child: CardMovie(
+                              movie: _.movies?.movies?[i],
+                            ),
+                            onTap: () {
+                              Get.to(() =>
+                                  DetailMoviePage(
+                                      id:_.movies?.movies?[i].id
+                                  ));
+                            },
+                          );
+                        }),
+                  ),
+                ],
+              );
+            }
+        )
+
+    );
+  }
+  Widget buildHome(){
+    return  SingleChildScrollView(
+      child: GetBuilder<MoviesController>(
+        init:_controller,
+          builder: (_) {
+          return Column(
+            children: [
+              Container(
+                margin:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children:  [
+                    Text(
+                      "RECOMENDED FOR YOU",
+                      style: _.theme.value == true ?  AppFonts.whiteM16:AppFonts.blackM16,
+                    ),
+                    Text("see all",
+                      style: _.theme.value == true ?  AppFonts.whiteM16 : AppFonts.blackM16 ,)
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 240,
+                child: GetBuilder<MoviesController>(
+                  //initState: (_)=>_controller?.listMovies(),
+                    id: "movies",
+                    init: _controller,
+                    builder: (_) {
+                      if (_.isload.value) return const Center(child: CircularProgressIndicator(color: Colors.white,),);
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: _.recomend?.length,
+                        itemBuilder: (ctx, i) {
+                          return InkWell(
+                            child: CardMovie(
+                              movie: _.recomend?[i],
+                              theme: _.theme.value,
+                            ),
+                            onTap: () {
+                              Get.to(() => DetailMoviePage(
+                                id: _.recomend?[i].id,
+                              ));
+                            },
+                          );
+                        },
+                      );
+
+                    }),
+              ),
+              Container(
+
+                  margin:const EdgeInsets.only(left: 20, bottom: 10),
+                  child: Text(
+                    "TOP RATED",
+                    style: _.theme.value == true ? AppFonts.whiteM16 : AppFonts.blackM16,
+                  )
+              ),
+
+              SizedBox(
+                  height: 250,
+                child: GetBuilder<MoviesController>(
+                  //initState: (_)=>_controller?.listMovies(),
+                    id: "movies",
+                    init: _controller,
+                    builder: (_) {
+                      if (_.isload.value) return const Center(child: CircularProgressIndicator(color: Colors.white,),);
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: _.top?.length,
+                        itemBuilder: (ctx, i) {
+                          return InkWell(
+                            child: CardMovie(
+                                movie: _.top?[i],
+                                theme: _.theme.value
+                            ),
+                            onTap: () {
+                              Get.to(() => DetailMoviePage(
+                                id: _.top?[i].id,
+                              ));
+                            },
+                          );
+                        },
+                      );
+                    }),
+              )
+            ],
+          );
+        }
+      ),
+    );
+  }
+
+  _swichSegment(BuildContext context) {
+    return GetBuilder<MoviesController>(
+        init:_controller,
+        builder: (_){
+          if(_.dynamicFor == TypeForSegment.HOME)return buildHome();
+          if(_.dynamicFor == TypeForSegment.SEARCH)return buildSearch();
+          return SizedBox();
+    });
+
+
+  }
 }
-/*return GridView.builder(
-                                  gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 20,
-                                mainAxisSpacing: 20,
-                                mainAxisExtent: 100,
-                              ), itemCount: _.movies?.movies?.length,
-                                  itemBuilder:(ctx, i){
-                                return InkWell(
-                                  child:CardMovie(
-                                    movie: _.movies?.movies?[i],
-                                  ) ,
-                                  onTap: (){
-                                    Get.to(()=>DetailMoviePage());
-                                  },
-                                );
-                              });*/

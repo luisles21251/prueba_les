@@ -8,6 +8,7 @@ import 'package:formz/formz.dart';
 import 'package:get/get.dart';
 import 'package:prueba_les/core/usecases/usecase.dart';
 import 'package:prueba_les/core/validators/input_default.dart';
+import 'package:prueba_les/feature/domain/entities/enum_segment.dart';
 import 'package:prueba_les/feature/domain/entities/list_movies_entity.dart';
 import 'package:prueba_les/feature/domain/usecase/get_list_movies_usecase.dart';
 import 'package:prueba_les/feature/domain/usecase/search_movie_usecase.dart';
@@ -17,7 +18,7 @@ class MoviesController extends GetxController {
   final GetListMoviesUsecCase _getListMoviesUsecCase;
   Rx<FormzStatus> statusForm = FormzStatus.invalid.obs;
   TextEditingController searchCtrl = TextEditingController();
-  InputDefault _searchInput = InputDefault.pure();
+  InputDefault _searchInput = const InputDefault.pure();
   ListMoviesEntity ? movies;
   String ? data;
   List? top ;
@@ -28,10 +29,15 @@ class MoviesController extends GetxController {
   RxBool theme = false.obs;
  // RxBool closeKeyboard = true.obs;
 
+  TypeForSegment dynamicFor = TypeForSegment.HOME;
 
+  changeDynamicForm(TypeForSegment value){
+    dynamicFor = value;
+    update();
+  }
 
   MoviesController({required GetListMoviesUsecCase getListMoviesUsecCase,required  SearchMovieUseCase searchMovieUseCase}):
-        assert(getListMoviesUsecCase !=null),_getListMoviesUsecCase = getListMoviesUsecCase,_searchMovieUseCase =searchMovieUseCase;
+        _getListMoviesUsecCase = getListMoviesUsecCase,_searchMovieUseCase =searchMovieUseCase;
 
 
 
@@ -71,21 +77,21 @@ class MoviesController extends GetxController {
   }
 
   String ?errorTitleInput(_) {
-    return this._searchInput.invalid ? "la busqueda debe contener caracteres " : null;
+    return _searchInput.invalid ? "la busqueda debe contener caracteres " : null;
 
   }
 
 
 
   void listMovies()async{
-    this.isload.value = true;
+    isload.value = true;
     final res = await _getListMoviesUsecCase.call(NoParams());
     res.fold((l) {
       log("error", name:"error al cargar lista");
     }, (r) {
-      this.top = r.movies?.where((e) => e.vote.toInt() >=7 ).toList();
-      this.recomend = r.movies?.where((e) => e.vote.toInt() <=6 ).toList();
-      this.isload.value = false;
+      top = r.movies?.where((e) => e.vote.toInt() >=7 ).toList();
+      recomend = r.movies?.where((e) => e.vote.toInt() <=6 ).toList();
+      isload.value = false;
     });
       update(["movies"]);
   }
@@ -93,14 +99,14 @@ class MoviesController extends GetxController {
 
 
   void searchMovie()async{
-  this.searchCtrl.clear();
-  this.isloadSearch.value = true;
+  searchCtrl.clear();
+  isloadSearch.value = true;
     final res = await _searchMovieUseCase.call(data!);
     res.fold((l) {
       log("error", name: "error al buscar pelicula");
     }, (r) {
       movies = r;
-      this.isloadSearch.value = false;
+      isloadSearch.value = false;
 
     });
   update(["search"]);
