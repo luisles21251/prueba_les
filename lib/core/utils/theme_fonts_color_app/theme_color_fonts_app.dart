@@ -38,6 +38,8 @@ class AppColors {
   /// Primary Color(0xff00d9b5)
   static const Color primary =Color(0xff2c3848);
 
+  static const Color sencond =Color(0xfff8f7f7);
+
   /// Colors.black
   static const pText = Colors.black;
 

@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
       builder: (_) {
         return Obx(() {
             return Scaffold(
-              backgroundColor:_.theme.value ? const Color(0xff5ca0d3): Colors.white,
+              backgroundColor:_.theme.value ? const Color(0xff5ca0d3): AppColors.sencond,
               body: SafeArea(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
