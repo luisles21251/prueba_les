@@ -43,11 +43,4 @@ Future<void> init() async {
 
   await Hive.initFlutter();
 
-  //adapter
-  //Hive.registerAdapter();
-  //Hive.registerAdapter();
-
-  //open Box
-  //await Hive.openBox<>();
-  //await Hive.openBox();
 }
